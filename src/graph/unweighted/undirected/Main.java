@@ -1,5 +1,7 @@
 package graph.unweighted.undirected;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) throws NoSuchFieldException {
         int[] nums = {1, 2, 3, 4, 5, 6};
@@ -13,5 +15,9 @@ public class Main {
         g.addEdge(2, 3);
         g.addEdge(1, 2);
         g.visualize();
+        List<Integer> result = g.findMinDist(2, 5);
+        for(Integer i : result){
+            System.out.print(i);
+        }
     }
 }
