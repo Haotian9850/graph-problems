@@ -11,7 +11,7 @@ public class Node {
 
     boolean visited = false;
     int val = -1;
-    Set<Integer> children = new HashSet<>();
+    Set<Node> children = new HashSet<>();
 
     public Node(){
         //default constructor
@@ -31,7 +31,8 @@ public class Node {
         }else{
             flag = "unvisited";
         }
-        result.append(flag);
+        result.append(flag + "; ");
+        result.append(" children: " + visualizeChildren());
         return result.toString();
     }
 
@@ -45,12 +46,14 @@ public class Node {
         return false;
     }
 
-    public void printChildren(){
-        System.out.print("children: ");
-        for(Integer n : this.children){
-            System.out.print(n + " ");
+    public String visualizeChildren(){
+        StringBuilder result = new StringBuilder();
+        for(Node n : this.children){
+            result.append(n.val + ", ");
         }
-        System.out.println();   //new line separator
+        String resultStr = result.toString();
+        resultStr = resultStr.substring(0, resultStr.length() - 2);
+        return resultStr;
     }
 
 }
