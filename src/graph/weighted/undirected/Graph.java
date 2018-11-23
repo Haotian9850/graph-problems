@@ -1,8 +1,7 @@
 package graph.weighted.undirected;
 
-import graph.weighted.undirected.Edge;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,10 +62,29 @@ public class Graph {
     *   finds a minimum spanning tree of a given graph
     *   Runtime: O(E log V + V log V)
     * */
+
+    public static class QueueNode {
+        int vertex;
+        int key;
+
+        public QueueNode(){
+            //default constructor
+            this.key = -1;
+            this.vertex = -1;
+        }
+
+        class QueueNodeComparator implements Comparator<QueueNode>{
+            @Override
+            public int compare(QueueNode queueNode, QueueNode t1) {
+                return queueNode.key - t1.key;
+            }
+        }
+    }
+
     public List<Edge> MSTPrims(){
         //return a list of edges that is the minimum spanning tree
         //BFS approach
-        
+
     }
 
 }
