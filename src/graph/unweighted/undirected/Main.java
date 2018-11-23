@@ -16,10 +16,11 @@ public class Main {
         g.addEdge(0, 6);
         g.addEdge(2, 6);
         g.addEdge(1, 5);
+        g.addEdge(3, 6);
 
         g.visualize();
 
-        List<Integer> minPath = g.minPath(2, 6);
+        List<Integer> minPath = g.minPath(1, 5);
         for(Integer i : minPath){
             System.out.println(i);
         }
