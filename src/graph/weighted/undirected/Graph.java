@@ -58,4 +58,15 @@ public class Graph {
         }
     }
 
+    /*
+    * Prim's algorithm implementation
+    *   finds a minimum spanning tree of a given graph
+    *   Runtime: O(E log V + V log V)
+    * */
+    public List<Edge> MSTPrims(){
+        //return a list of edges that is the minimum spanning tree
+        //BFS approach
+        
+    }
+
 }
