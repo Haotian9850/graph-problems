@@ -24,7 +24,7 @@ public class Graph {
         this.list = new ArrayList<>();
         //init
         for(int i = 0; i < this.numNodes; ++ i){
-            this.list[i] = new LinkedList<>();
+            this.list.add(new LinkedList<>());
         }
     }
 
@@ -34,14 +34,14 @@ public class Graph {
             throw new IndexOutOfBoundsException("Malformed input!");
         }
         //add two edges
-        this.list[i].offerLast(j);
-        this.list[j].offerLast(i);
+        this.list.get(i).offerLast(j);
+        this.list.get(j).offerLast(i);
     }
 
     public void visualize(){
         for(int i = 0; i < this.numNodes; ++ i){
             System.out.print("node " + i + ":");
-            for(Integer child : this.list[i]){
+            for(Integer child : this.list.get(i)){
                 System.out.print(" " + child);
             }
             System.out.println();   //new line separator
