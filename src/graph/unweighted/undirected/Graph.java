@@ -48,4 +48,35 @@ public class Graph {
         }
     }
 
+    /*
+    * find min path from node i to node j, i -> j
+    * */
+    public List<Integer> minPath(int i, int j){
+        //check input
+        if(i < 0 || i >= this.numNodes || j < 0 || j >= this.numNodes){
+            throw new IndexOutOfBoundsException("Malformed input!");
+        }
+        //BFS approach
+        LinkedList<List<Integer>> queue = new LinkedList<>();
+        List<Integer> path = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        path.add(i);
+        queue.add(path);
+        while(!queue.isEmpty()){
+            List<Integer> currPath = queue.remove();
+            int lastNode = currPath.get(currPath.size() - 1);
+            if(lastNode == j){
+                result = new ArrayList<>(currPath);
+                return result;
+            }
+            for(Integer child : this.list.get(lastNode)){
+                currPath.add(child);
+                queue.add(new ArrayList<>(currPath));
+                currPath.remove(currPath.size() - 1);
+            }
+        }
+        return result;
+    }
+
+
 }
