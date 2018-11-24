@@ -2,20 +2,20 @@ package graph.weighted.undirected;
 
 public class Edge {
 
-    int node1;
-    int node2;
+    int nodeA;
+    int nodeB;
     int weight;
 
     public Edge(){
         //default constructor
-        this.node1 = -1;
-        this.node2 = -1;
+        this.nodeA = -1;
+        this.nodeB = -1;
         this.weight = -1;
     }
 
     public Edge(int node1, int node2, int weight){
-        this.node1 = node1;
-        this.node2 = node2;
+        this.nodeA = node1;
+        this.nodeB = node2;
         this.weight = weight;
     }
 

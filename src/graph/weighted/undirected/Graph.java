@@ -1,9 +1,6 @@
 package graph.weighted.undirected;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Graph {
 
@@ -51,7 +48,7 @@ public class Graph {
             System.out.println("node " + i + ": ");
             LinkedList<Edge> edgeList = this.list.get(i);
             for(Edge e : edgeList){
-                System.out.println("    " + "(" + e.node1 + " -- " + e.node2 + ") with weight " + e.weight);
+                System.out.println("    " + "(" + e.nodeA + " -- " + e.nodeB + ") with weight " + e.weight);
             }
             System.out.println();   //new line separator
         }
@@ -62,10 +59,9 @@ public class Graph {
     *   finds a minimum spanning tree of a given graph
     *   Runtime: O(E log V + V log V)
     * */
-
     public static class QueueNode {
         int vertex;
-        int key;
+        int key;    //dist
 
         public QueueNode(){
             //default constructor
@@ -73,7 +69,7 @@ public class Graph {
             this.vertex = -1;
         }
 
-        class QueueNodeComparator implements Comparator<QueueNode>{
+        static class QueueNodeComparator implements Comparator<QueueNode>{
             @Override
             public int compare(QueueNode queueNode, QueueNode t1) {
                 return queueNode.key - t1.key;
@@ -81,10 +77,60 @@ public class Graph {
         }
     }
 
-    public List<Edge> MSTPrims(){
+    public List<int[]> MSTPrims(){
         //return a list of edges that is the minimum spanning tree
         //BFS approach
+        List<int[]> result = new ArrayList<>();
 
+        boolean[] inHeap = new boolean[this.numNodes];
+        QueueNode[] nodeSet = new QueueNode[this.numNodes];
+        int[] parents = new int[this.numNodes]; //in question of this array...
+
+        //init
+        Arrays.fill(inHeap, false);
+        for(int i = 0; i < this.numNodes; ++ i){
+            nodeSet[i] = new QueueNode();
+            nodeSet[i].key = Integer.MAX_VALUE;
+            nodeSet[i].vertex = i;
+            parents[i] = -1;    //?
+        }
+        inHeap[0] = true;   //start from 0, assuming a MST will always exist
+
+        PriorityQueue<QueueNode> heap = new PriorityQueue<>(this.numNodes, new QueueNode.QueueNodeComparator());
+        for(int i = 1; i < this.numNodes; ++ i){
+            heap.add(nodeSet[i]);
+        }
+
+        while(!heap.isEmpty()){
+            QueueNode node = heap.poll();
+            inHeap[node.vertex] = true;
+
+            for(Edge e : this.list.get(node.vertex)){
+                int neighbor = -1;
+                if(e.nodeA != node.vertex){
+                    neighbor = e.nodeA;
+                }else{
+                    neighbor = e.nodeB;
+                }
+                if(!inHeap[neighbor]){
+                    //update key value
+                    if(nodeSet[neighbor].key > e.weight){
+                        heap.remove(nodeSet[neighbor]);
+                        nodeSet[neighbor].key = e.weight;
+                        heap.add(nodeSet[neighbor]);
+                        parents[neighbor] = node.vertex;
+                    }
+                }
+            }
+        }
+        //make result
+        for(int i = 0; i < this.numNodes; ++ i){
+            int[] pair = new int[2];
+            pair[0] = parents[i];
+            parents[1] = i;
+            result.add(pair);
+        }
+        return result;
     }
 
 }
