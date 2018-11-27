@@ -24,11 +24,7 @@ public class Main {
         g.addEdge(5, 4, 10);
 
         g.visualize();
-
-        List<int[]> MST = g.MSTPrims();
-        for(int[] path : MST){
-            System.out.println(path[0] + " -> " + path[1]);
-        }
+        g.MSTPrims();
     }
 
 }

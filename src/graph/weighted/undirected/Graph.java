@@ -129,6 +129,12 @@ public class Graph {
                 }
             }
         }
+
+        System.out.print(result.get(0));
+        for(int i = 1; i < this.numNodes; ++ i){
+            System.out.print(" -> " + result.get(i));
+        }
+
         //make result
         return result;
     }
