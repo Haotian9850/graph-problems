@@ -77,33 +77,39 @@ public class Graph {
         }
     }
 
-    public List<int[]> MSTPrims(){
+    public List<Integer> MSTPrims(){
         //return a list of edges that is the minimum spanning tree
         //BFS approach
-        List<int[]> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
 
-        boolean[] inHeap = new boolean[this.numNodes];
+        boolean[] included = new boolean[this.numNodes];  //index-based
+
         QueueNode[] nodeSet = new QueueNode[this.numNodes];
-        int[] parents = new int[this.numNodes]; //in question of this array...
+
 
         //init
-        Arrays.fill(inHeap, false);
+        Arrays.fill(included, false);
+
         for(int i = 0; i < this.numNodes; ++ i){
             nodeSet[i] = new QueueNode();
             nodeSet[i].key = Integer.MAX_VALUE;
             nodeSet[i].vertex = i;
-            parents[i] = -1;    //?
         }
-        inHeap[0] = true;   //start from 0, assuming a MST will always exist
 
-        PriorityQueue<QueueNode> heap = new PriorityQueue<>(this.numNodes, new QueueNode.QueueNodeComparator());
-        for(int i = 1; i < this.numNodes; ++ i){
-            heap.add(nodeSet[i]);
+        nodeSet[0].key = 0;
+
+        included[0] = true;   //nodeSet[0] is put in heap
+
+        PriorityQueue<QueueNode> heap = new PriorityQueue<>(new QueueNode.QueueNodeComparator());
+        for(QueueNode n : nodeSet){
+            heap.add(n);
         }
 
         while(!heap.isEmpty()){
             QueueNode node = heap.poll();
-            inHeap[node.vertex] = true;
+            included[node.vertex] = true;
+            System.out.println("considering node: " + node.vertex);
+            result.add(node.vertex);
 
             for(Edge e : this.list.get(node.vertex)){
                 int neighbor = -1;
@@ -112,24 +118,18 @@ public class Graph {
                 }else{
                     neighbor = e.nodeB;
                 }
-                if(!inHeap[neighbor]){
+                System.out.println(neighbor);
+                if(!included[neighbor]){
                     //update key value
                     if(nodeSet[neighbor].key > e.weight){
                         heap.remove(nodeSet[neighbor]);
                         nodeSet[neighbor].key = e.weight;
                         heap.add(nodeSet[neighbor]);
-                        parents[neighbor] = node.vertex;
                     }
                 }
             }
         }
         //make result
-        for(int i = 0; i < this.numNodes; ++ i){
-            int[] pair = new int[2];
-            pair[0] = parents[i];
-            parents[1] = i;
-            result.add(pair);
-        }
         return result;
     }
 
