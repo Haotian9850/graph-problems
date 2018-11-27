@@ -25,6 +25,7 @@ public class Main {
 
         g.visualize();
         g.MSTPrims();
+        g.MinDistDijkstras(0, 6);
     }
 
 }

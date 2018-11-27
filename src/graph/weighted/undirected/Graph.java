@@ -144,22 +144,69 @@ public class Graph {
         return result;
     }
 
-    public List<Integer> MinDistDijkstras(int i, int j){
+    public List<Integer> MinDistDijkstras(int start, int end){
         //returns minimum possible distance between i and j
         //validate input
-        if(i < 0 || i >= this.numNodes || j < 0 || j >= this.numNodes){
-            throw new IndexOutOfBoundsException("Malformed input!");
-        }
-
         List<Integer> result = new ArrayList<>();
 
-        boolean[] visited = new boolean[this.numNodes];
-        //init
+        boolean[] included = new boolean[this.numNodes];  //index-based
+
         QueueNode[] nodeSet = new QueueNode[this.numNodes];
+
+
+        //init
+        Arrays.fill(included, false);
+
         for(int i = 0; i < this.numNodes; ++ i){
-            QueueNode node = new QueueNode();
-            
+            nodeSet[i] = new QueueNode();
+            nodeSet[i].key = Integer.MAX_VALUE;
+            nodeSet[i].vertex = i;
         }
+
+        nodeSet[start].key = 0;
+
+        included[start] = true;   //nodeSet[0] is put in heap
+
+        PriorityQueue<QueueNode> heap = new PriorityQueue<>(new QueueNode.QueueNodeComparator());
+        for(QueueNode n : nodeSet){
+            heap.add(n);
+        }
+
+        while(!heap.isEmpty()){
+            QueueNode node = heap.poll();
+            included[node.vertex] = true;
+            System.out.println("considering node: " + node.vertex);
+
+            for(Edge e : this.list.get(node.vertex)){
+                int neighbor = -1;
+                if(e.nodeA != node.vertex){
+                    neighbor = e.nodeA;
+                }else{
+                    neighbor = e.nodeB;
+                }
+
+                if(neighbor == end){
+                    result.add(neighbor);
+                    for(Integer i : result){
+                        System.out.print(i + " ");
+                    }
+                    return result;
+                }
+
+                System.out.println(neighbor);
+                if(!included[neighbor]){
+                    //update key value
+                    if(nodeSet[neighbor].key > (e.weight + node.key)){
+                        result.add(neighbor);
+                        heap.remove(nodeSet[neighbor]);
+                        nodeSet[neighbor].key = e.weight + node.key;
+                        heap.add(nodeSet[neighbor]);
+                    }
+                }
+            }
+        }
+        return result;
+
     }
 
 }
