@@ -174,7 +174,6 @@ public class Graph {
 
         while(!heap.isEmpty()){
             QueueNode node = heap.poll();
-            included[node.vertex] = true;
             System.out.println("considering node: " + node.vertex);
 
             for(Edge e : this.list.get(node.vertex)){
@@ -185,25 +184,17 @@ public class Graph {
                     neighbor = e.nodeB;
                 }
 
-                if(neighbor == end){
-                    result.add(neighbor);
-                    for(Integer i : result){
-                        System.out.print(i + " ");
-                    }
-                    return result;
-                }
-
                 System.out.println(neighbor);
                 if(!included[neighbor]){
                     //update key value
                     if(nodeSet[neighbor].key > (e.weight + node.key)){
-                        result.add(neighbor);
                         heap.remove(nodeSet[neighbor]);
                         nodeSet[neighbor].key = e.weight + node.key;
                         heap.add(nodeSet[neighbor]);
                     }
                 }
             }
+            included[node.vertex] = true;
         }
         return result;
 
