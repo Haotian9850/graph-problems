@@ -69,6 +69,11 @@ public class Graph {
             this.vertex = -1;
         }
 
+        public QueueNode(int key, int vertex){
+            this.key = key;
+            this.vertex = vertex;
+        }
+
         static class QueueNodeComparator implements Comparator<QueueNode>{
             @Override
             public int compare(QueueNode queueNode, QueueNode t1) {
@@ -137,6 +142,24 @@ public class Graph {
 
         //make result
         return result;
+    }
+
+    public List<Integer> MinDistDijkstras(int i, int j){
+        //returns minimum possible distance between i and j
+        //validate input
+        if(i < 0 || i >= this.numNodes || j < 0 || j >= this.numNodes){
+            throw new IndexOutOfBoundsException("Malformed input!");
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        boolean[] visited = new boolean[this.numNodes];
+        //init
+        QueueNode[] nodeSet = new QueueNode[this.numNodes];
+        for(int i = 0; i < this.numNodes; ++ i){
+            QueueNode node = new QueueNode();
+            
+        }
     }
 
 }
