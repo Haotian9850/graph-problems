@@ -1,4 +1,4 @@
-package graph.weighted.directed;
+package graph.adjacencyList.weighted.directed;
 
 public class Edge {
 

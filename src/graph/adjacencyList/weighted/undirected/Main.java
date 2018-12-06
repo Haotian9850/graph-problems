@@ -1,12 +1,10 @@
-package graph.weighted.undirected;
-
-import java.util.List;
+package graph.adjacencyList.weighted.undirected;
 
 public class Main {
 
     /*Main testing class*/
     public static void main(String[] args){
-        Graph g = new Graph(9);
+        Graph g = new Graph(9, 14);
 
         g.addEdge(0, 1, 4);
         g.addEdge(0, 7, 8);
@@ -25,7 +23,7 @@ public class Main {
 
         g.visualize();
         g.MSTPrims();
-        g.MinDistDijkstras(0, 6);
+        g.shortestPathDistDijkstras(0, 8);
     }
 
 }

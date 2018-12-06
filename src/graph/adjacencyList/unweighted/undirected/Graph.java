@@ -1,4 +1,4 @@
-package graph.unweighted.undirected;
+package graph.adjacencyList.unweighted.undirected;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
