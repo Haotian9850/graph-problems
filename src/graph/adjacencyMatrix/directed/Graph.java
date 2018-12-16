@@ -2,16 +2,14 @@ package graph.adjacencyMatrix.directed;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Graph {
-
     public int numNode;
     public int[][] matrix;  //adjacency matrix representation
-
     public Graph(){
         //emtpy constructor
     }
-
     public Graph(int numNode){
         this.numNode = numNode;
         this.matrix = new int[numNode][numNode];
@@ -85,6 +83,30 @@ public class Graph {
 
 
     /*TODO: implement Edmunds-Karp Algorithm*/
+    public int maxFlowEdmondKarp(int source, int sink){
+        int[][] residualGraph = creatResidual();
+        boolean[] visited = new boolean[this.numNode];
+        Arrays.fill(visited, false);
+        visited[source] = true; //init
+        int[] lastNodeVisited = new int[this.numNode];
+        lastNodeVisited[source] = source;
+        int[] capacity = new int[this.numNode];
+        capacity[source] = Integer.MAX_VALUE;
 
+        //BFS
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(source);
+        while(!queue.isEmpty()){
+            int node = queue.poll();
+            for(Integer neighbor : this.matrix[node]){
+                if(residualGraph[node][neighbor] > 0 && !visited[neighbor]){
+                    visited[neighbor] = true;
+                    //update capacity
+                    capacity[neighbor] = Math.min(capacity[node], residualGraph[node][neighbor]);
+                }
+            }
+        }
+        return -1;
+    }
 
 }

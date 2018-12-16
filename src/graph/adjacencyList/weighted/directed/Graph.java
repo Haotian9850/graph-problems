@@ -57,7 +57,10 @@ public class Graph {
     }
 
 
-    /*TODO: implement Bellman-Ford Algorithm*/
+    /*
+    * @return: a list of integers, each equals to the shortest distance from start node
+    * to the node of its index
+    * */
     public List<Integer> shortestDistToAllBellmanFord(int start){
         List<Integer> result = new ArrayList<>();
         List<Edge> allEdges = getAllEdges();
@@ -99,10 +102,12 @@ public class Graph {
         return result;
     }
 
-
+    /*
+     * @return: a list of integers, each equals to the shortest distance from start node
+     * to the node of its index
+     * */
     public List<Integer> shortestDistToAllFloydWarshall(int start){
         List<Integer> result = new ArrayList();
-
         //DP mem structure
         int[][] dist = new int[this.numNodes][this.numNodes];
         for(int[] row : dist){
@@ -120,7 +125,6 @@ public class Graph {
             int weight = e.weight;
             dist[src][dest] = weight;
         }
-
         //impl
         for(int i = 0; i < this.numNodes; ++ i){
             for(int j = 0; j < this.numNodes; ++ j){
@@ -131,16 +135,13 @@ public class Graph {
                 }
             }
         }
-
         //make result
         for(int i = 0; i < this.numNodes; ++ i){
             result.add(dist[start][i]);
         }
-
         for(Integer i : result){
             System.out.println(i);
         }
-
         return result;
     }
 

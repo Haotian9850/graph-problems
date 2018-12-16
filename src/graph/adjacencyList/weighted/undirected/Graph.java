@@ -12,12 +12,10 @@ public class Graph {
     int numNodes;
     int numEdge;
     List<LinkedList<Edge>> list;
-
     public Graph(){
         //default constructor
         this.numNodes = -1;
     }
-
     public Graph(int numNodes, int numEdge){
         this.numNodes = numNodes;
         this.numEdge = numEdge;
@@ -84,34 +82,29 @@ public class Graph {
         }
     }
 
+
+    /*
+    * @return: a list of nodes (represented by integers) on the path of MST
+    * */
     public List<Integer> MSTPrims(){
         //return a list of edges that is the minimum spanning tree
         //BFS approach
         List<Integer> result = new ArrayList<>();
-
         boolean[] included = new boolean[this.numNodes];  //index-based
-
         QueueNode[] nodeSet = new QueueNode[this.numNodes];
-
-
         //init
         Arrays.fill(included, false);
-
         for(int i = 0; i < this.numNodes; ++ i){
             nodeSet[i] = new QueueNode();
             nodeSet[i].key = Integer.MAX_VALUE;
             nodeSet[i].vertex = i;
         }
-
         nodeSet[0].key = 0;
-
         included[0] = true;   //nodeSet[0] is put in heap
-
         PriorityQueue<QueueNode> heap = new PriorityQueue<>(new QueueNode.QueueNodeComparator());
         for(QueueNode n : nodeSet){
             heap.add(n);
         }
-
         while(!heap.isEmpty()){
             QueueNode node = heap.poll();
             included[node.vertex] = true;
@@ -135,11 +128,12 @@ public class Graph {
                 }
             }
         }
-
-        //make result
         return result;
     }
 
+    /*
+    * @return: a list of integers that is the shortest path from start to end
+    * */
     public List<Integer> shortestPathDistDijkstras(int start, int end){
         //returns minimum possible distance between i and j
         //validate input
